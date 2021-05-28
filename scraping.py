@@ -113,6 +113,7 @@ def mars_hemispheres(browser):
         browser.back()
     return hemisphere_image_urls
 
+
 if __name__ == "__main___":
     # If running as script, print scraped data
     print(scrape_all())
