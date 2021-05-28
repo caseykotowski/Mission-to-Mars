@@ -11,14 +11,15 @@ def scrape_all():
     executable_path = {'executable_path': ChromeDriverManager().install()}
     browser = Browser('chrome', **executable_path, headless=True)
     
-    news_title, news_p = mars_news(browser)
+    news_title, news_paragraph = mars_news(browser)
 #Scraping results
     data = {
     "news_title": news_title,
-    "news_paragraph": news_p,
+    "news_paragraph": news_paragraph,
     "featured_image": featured_image(browser),
     "facts": mars_facts(),
-    "last_modified": dt.datetime.now()}
+    "last_modified": dt.datetime.now(),
+    "hemispheres": hemispheres(browser)}
     
     #Stop webdriver, return data
     browser.quit()
@@ -85,6 +86,32 @@ def mars_facts():
     df.set_index('description', inplace=True)
     
     return df.to_html(classes="table table-striped")
+
+def mars_hemispheres(browser):
+    url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
+    browser.visit(url)
+
+    # 2. Create a list to hold the images and titles.
+    hemisphere_image_urls = []
+    # a class = "itemLink product-item".get('href') takes you there
+    # img class="wide-image" get 'src'
+    # 3. Write code to retrieve the image urls and titles for each hemisphere.
+    #Looping only over 4 because I know there are 4 himispheres
+    for i in range(4):
+        #empty dictionary to add the title, img_url key:value pairs
+        hemispheres = {}
+        #grab the link to the main picture
+        browser.find_by_css('a.product-item h3')[i].click()
+        #grab the picture link
+        element = browser.find_link_by_text('Sample').first
+        img_url = element['href']
+        title = browser.find_by_css("h2.title").text
+        hemispheres["img_url"] = img_url
+        hemispheres["title"] = title
+        # add the dictionary to the list
+        hemisphere_image_urls.append(hemispheres)
+        browser.back()
+    return hemisphere_image_urls
 
 if __name__ == "__main___":
     # If running as script, print scraped data
