@@ -9,12 +9,20 @@
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     />
+    <style>
+      body {background-color: darkslategray;}
+      h1 {color:white;}
+      p {color:yellow;}
+      h3 {color:whitesmoke;}
+      a {color:navajowhite;}
+      div {color:purple;}
+    </style>
   </head>
   <body>
     <div class="container">
       <!-- Add Jumbotron to Header -->
       <div class="jumbotron text-center">
-        <h1>Mission to Mars</h1>
+        <h1 class="font-weight-bold">Mission to Mars</h1>
         <!-- Add a button to activate scraping script -->
         <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data</a></p>
       </div>
@@ -35,7 +43,7 @@
       <!-- Section for Featured Image and Facts table -->
       <div class="row" id="mars-featured-image">
         <div class="col-md-8">
-          <h2>Featured Mars Image</h2>
+          <h2 class="font-weight-bold">Featured Mars Image</h2>
 
           <!-- if images is False/None/non-existent, then default to error message -->
           <img
@@ -48,7 +56,7 @@
         <div class="col-md-4">
           <!-- Mars Facts -->
           <div class="row" id="mars-facts">
-            <h4>Mars Facts</h4>
+            <h4 class="font-weight-bold"> Mars Facts</h4>
             {{ mars.facts | safe }}
           </div>
         </div>
